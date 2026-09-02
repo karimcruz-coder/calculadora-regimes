@@ -1,0 +1,722 @@
+<title>Simples ou Híbrido</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lexend:wght@300;400;500;600;700&display=swap">
+<style>
+  :root {
+    --verde-escuro: #0D423F;
+    --verde-claro: #69E470;
+    --off-white: #F9F9F9;
+    --amarelo-claro: #F1FDC1;
+    --bege: #E2E7C7;
+    --amarelo: #FFD15C;
+    --laranja: #F4933B;
+
+    --bg: var(--off-white);
+    --surface: #ffffff;
+    --surface-2: #F4F5EE;
+    --ink: var(--verde-escuro);
+    --ink-2: #4a5f5d;
+    --ink-3: #7a8988;
+    --line: #DDE3D4;
+    --accent: var(--verde-claro);
+    --accent-ink: var(--verde-escuro);
+    --highlight: var(--amarelo-claro);
+    --warn: var(--laranja);
+    --risk-bg: var(--highlight);
+    --risk-ink: var(--verde-escuro);
+    --risk-line: var(--verde-escuro);
+
+    --radius: 14px;
+    --radius-sm: 8px;
+    --shadow: 0 1px 2px rgba(13,66,63,.04), 0 8px 24px rgba(13,66,63,.06);
+  }
+
+  :root:not([data-theme="light"]) {
+    @media (prefers-color-scheme: dark) {
+      --bg: #0A2A28;
+      --surface: #103B38;
+      --surface-2: #0D423F;
+      --ink: #F1FDC1;
+      --ink-2: #C7D6C7;
+      --ink-3: #8fa39f;
+      --line: #1e514d;
+      --accent: #69E470;
+      --accent-ink: #0A2A28;
+      --highlight: #14524D;
+      --warn: #FFD15C;
+      --risk-bg: var(--highlight);
+      --risk-ink: var(--ink);
+      --risk-line: var(--accent);
+      --shadow: 0 1px 2px rgba(0,0,0,.2), 0 12px 32px rgba(0,0,0,.25);
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0A2A28;
+    --surface: #103B38;
+    --surface-2: #0D423F;
+    --ink: #F1FDC1;
+    --ink-2: #C7D6C7;
+    --ink-3: #8fa39f;
+    --line: #1e514d;
+    --accent: #69E470;
+    --accent-ink: #0A2A28;
+    --highlight: #14524D;
+    --warn: #FFD15C;
+    --risk-bg: var(--highlight);
+    --risk-ink: var(--ink);
+    --risk-line: var(--accent);
+    --shadow: 0 1px 2px rgba(0,0,0,.2), 0 12px 32px rgba(0,0,0,.25);
+  }
+
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Lexend', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-weight: 400;
+    line-height: 1.55;
+    font-variant-numeric: tabular-nums;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  .wrap { max-width: 880px; margin: 0 auto; padding: 40px 24px 80px; }
+
+  header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 32px; gap: 16px; flex-wrap: wrap; }
+  .brand { display: flex; align-items: center; gap: 10px; font-weight: 600; letter-spacing: -0.01em; color: var(--ink); font-size: 20px; }
+  .theme-btn { background: transparent; border: 1px solid var(--line); color: var(--ink-2); padding: 6px 12px; border-radius: 100px; font-family: inherit; font-size: 13px; cursor: pointer; }
+  .theme-btn:hover { border-color: var(--ink-2); color: var(--ink); }
+
+  .hero { margin-bottom: 40px; }
+  .eyebrow { display: inline-block; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--accent-ink); background: var(--accent); padding: 5px 10px; border-radius: 100px; font-weight: 500; margin-bottom: 16px; }
+  h1 { font-size: clamp(32px, 5vw, 44px); line-height: 1.05; font-weight: 600; letter-spacing: -0.02em; margin: 0 0 12px; text-wrap: balance; }
+  .lead { font-size: 17px; color: var(--ink-2); max-width: 60ch; margin: 0 0 20px; }
+  .estim-banner { display: inline-block; background: var(--highlight); border: 1px solid var(--bege); color: var(--ink); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px; line-height: 1.5; }
+  .estim-banner a { color: var(--ink); text-decoration: underline; text-underline-offset: 2px; }
+  :root[data-theme="dark"] .estim-banner, :root:not([data-theme="light"]) .estim-banner { border-color: var(--line); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .estim-banner { border-color: var(--line); } }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .card > h2 { font-size: 18px; font-weight: 600; margin: 0 0 4px; letter-spacing: -0.01em; }
+  .card > .hint { font-size: 13px; color: var(--ink-3); margin: 0 0 20px; }
+
+  .field { display: block; margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
+  .field label { display: block; font-size: 14px; color: var(--ink-2); margin-bottom: 6px; }
+  .field .sub { font-size: 12px; color: var(--ink-3); font-weight: 300; }
+  .input-money { display: flex; align-items: center; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); overflow: hidden; transition: border-color .15s; }
+  .input-money:focus-within { border-color: var(--accent-ink); }
+  .input-money .prefix { padding: 10px 12px; color: var(--ink-3); font-size: 14px; background: var(--surface-2); border-right: 1px solid var(--line); }
+  .input-money input { flex: 1; border: 0; background: transparent; padding: 10px 12px; font-family: inherit; font-size: 15px; color: var(--ink); font-variant-numeric: tabular-nums; outline: none; min-width: 0; }
+
+  .grid-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { .grid-2 { grid-template-columns: 1fr; } }
+
+  .auto-note { font-size: 12px; color: var(--ink-3); margin-top: 6px; display: flex; align-items: center; gap: 6px; }
+  .auto-note::before { content: '↑'; color: var(--accent-ink); font-weight: 600; }
+  :root[data-theme="dark"] .auto-note::before, :root:not([data-theme="light"]) .auto-note::before { color: var(--accent); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .auto-note::before { color: var(--accent); } }
+
+  /* Quick action buttons */
+  .quick-btn { background: var(--surface-2); border: 1px solid var(--line); color: var(--ink-2); padding: 8px 14px; border-radius: 100px; font-family: inherit; font-size: 13px; cursor: pointer; transition: all .15s; }
+  .quick-btn:hover { border-color: var(--accent-ink); color: var(--ink); background: var(--highlight); }
+  :root[data-theme="dark"] .quick-btn:hover, :root:not([data-theme="light"]) .quick-btn:hover { border-color: var(--accent); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .quick-btn:hover { border-color: var(--accent); } }
+  .quick-actions { display: flex; flex-direction: column; gap: 10px; margin-top: 10px; }
+  .quick-action { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .quick-hint { font-size: 12px; color: var(--ink-3); font-style: italic; }
+
+  /* Profession grid */
+  .profession-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(140px, 1fr)); gap: 8px; }
+  .profession-grid input { position: absolute; opacity: 0; pointer-events: none; }
+  .profession-grid label { display: flex; align-items: center; gap: 8px; padding: 10px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); cursor: pointer; font-size: 13px; color: var(--ink-2); transition: all .15s; }
+  .profession-grid label:hover { border-color: var(--ink-3); }
+  .profession-grid input:checked + label { border-color: var(--verde-escuro); background: var(--highlight); color: var(--ink); font-weight: 500; }
+  :root[data-theme="dark"] .profession-grid input:checked + label, :root:not([data-theme="light"]) .profession-grid input:checked + label { border-color: var(--accent); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .profession-grid input:checked + label { border-color: var(--accent); } }
+  .prof-icon { font-size: 16px; }
+
+  /* Anexo pill */
+  .anexo-pill { display: inline-flex; align-items: center; gap: 8px; padding: 6px 12px; border-radius: 100px; font-size: 12px; font-weight: 500; margin-top: 8px; }
+  .anexo-pill.iii { background: color-mix(in srgb, var(--accent) 25%, var(--surface)); color: var(--accent-ink); }
+  .anexo-pill.v { background: color-mix(in srgb, var(--warn) 20%, var(--surface)); color: var(--risk-ink); }
+  :root[data-theme="dark"] .anexo-pill.iii, :root:not([data-theme="light"]) .anexo-pill.iii { color: var(--accent); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .anexo-pill.iii { color: var(--accent); } }
+  :root[data-theme="dark"] .anexo-pill.v, :root:not([data-theme="light"]) .anexo-pill.v { color: var(--warn); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .anexo-pill.v { color: var(--warn); } }
+
+  .mix-cards { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 16px; }
+  @media (max-width: 560px) { .mix-cards { grid-template-columns: 1fr; } }
+  .mix-card { background: var(--surface-2); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 14px; }
+  .mix-card .icon { width: 32px; height: 32px; border-radius: 8px; background: var(--highlight); display: flex; align-items: center; justify-content: center; margin-bottom: 8px; }
+  .mix-card .icon svg { width: 18px; height: 18px; }
+  .mix-card .name { font-size: 14px; font-weight: 600; margin-bottom: 4px; }
+  .mix-card .desc { font-size: 12px; color: var(--ink-2); line-height: 1.45; }
+  .mix-card .ex { font-size: 11px; color: var(--ink-3); margin-top: 6px; font-style: italic; }
+
+  .slider-block { padding: 16px; background: var(--surface-2); border-radius: var(--radius-sm); }
+  .slider-label { display: flex; justify-content: space-between; align-items: baseline; font-size: 13px; color: var(--ink-2); margin-bottom: 10px; }
+  .slider-label .val { font-size: 16px; font-weight: 600; color: var(--ink); }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; background: var(--bege); border-radius: 100px; outline: none; }
+  :root[data-theme="dark"] input[type=range], :root:not([data-theme="light"]) input[type=range] { background: var(--line); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) input[type=range] { background: var(--line); } }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--accent); border: 2px solid var(--verde-escuro); cursor: pointer; }
+  input[type=range]::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--accent); border: 2px solid var(--verde-escuro); cursor: pointer; }
+
+  .mix-preview { display: flex; height: 8px; border-radius: 100px; overflow: hidden; margin-top: 12px; background: var(--line); }
+  .mix-preview .pj { background: var(--verde-escuro); }
+  .mix-preview .pf { background: var(--amarelo); }
+  :root[data-theme="dark"] .mix-preview .pj, :root:not([data-theme="light"]) .mix-preview .pj { background: var(--accent); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .mix-preview .pj { background: var(--accent); } }
+
+  .warn-box { display: none; background: color-mix(in srgb, var(--warn) 15%, var(--surface)); border-left: 3px solid var(--warn); padding: 10px 14px; border-radius: var(--radius-sm); font-size: 13px; color: var(--ink-2); margin-top: 12px; }
+  .warn-box.show { display: block; }
+
+  .result {
+    background: var(--verde-escuro);
+    color: #F9F9F9;
+    border-radius: var(--radius);
+    padding: 32px;
+    margin: 32px 0 24px;
+    position: relative;
+    overflow: hidden;
+  }
+  :root[data-theme="dark"] .result, :root:not([data-theme="light"]) .result { background: var(--surface-2); border: 1px solid var(--line); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .result { background: var(--surface-2); border: 1px solid var(--line); } }
+
+  .result .badge { display: inline-block; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; background: var(--accent); color: var(--verde-escuro); padding: 4px 10px; border-radius: 100px; font-weight: 500; margin-bottom: 12px; }
+  .verdict { font-size: clamp(24px, 4vw, 34px); font-weight: 600; letter-spacing: -0.02em; line-height: 1.15; margin: 0 0 8px; text-wrap: balance; }
+  .verdict .hl { color: var(--accent); }
+  .confidence { font-size: 14px; color: rgba(249,249,249,.8); margin: 0 0 24px; max-width: 60ch; }
+  :root[data-theme="dark"] .result .confidence, :root:not([data-theme="light"]) .result .confidence { color: var(--ink-2); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .result .confidence { color: var(--ink-2); } }
+  :root[data-theme="dark"] .result .verdict, :root:not([data-theme="light"]) .result .verdict { color: var(--ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .result .verdict { color: var(--ink); } }
+
+  .compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 32px; padding-top: 6px; }
+  @media (max-width: 560px) { .compare { grid-template-columns: 1fr; } }
+  .col { background: rgba(249,249,249,.06); border: 1px solid rgba(249,249,249,.12); border-radius: var(--radius-sm); padding: 18px; transition: transform .25s ease, box-shadow .25s ease; }
+  @media (prefers-reduced-motion: reduce) { .col { transition: none; } }
+  :root[data-theme="dark"] .col:not(.winner), :root:not([data-theme="light"]) .col:not(.winner) { background: rgba(105,228,112,.05); border-color: var(--line); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .col:not(.winner) { background: rgba(105,228,112,.05); border-color: var(--line); } }
+
+  /* Winner — força alto contraste em qualquer tema */
+  .col.winner,
+  :root[data-theme="dark"] .col.winner,
+  :root[data-theme="light"] .col.winner,
+  :root:not([data-theme="light"]) .col.winner {
+    background: #69E470 !important;
+    color: #0D423F !important;
+    border-color: #69E470 !important;
+    transform: scale(1.02);
+    box-shadow: 0 8px 24px rgba(105, 228, 112, 0.35);
+    position: relative;
+  }
+  .col.winner .title,
+  .col.winner .big,
+  .col.winner .sub,
+  .col.winner dt,
+  .col.winner dd { color: #0D423F !important; opacity: 1; }
+  .col.winner dt { opacity: 0.85; }
+  .col.winner::before {
+    content: 'MELHOR OPÇÃO';
+    position: absolute;
+    top: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: #0D423F;
+    color: #69E470;
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.12em;
+    padding: 4px 10px;
+    border-radius: 100px;
+    white-space: nowrap;
+    z-index: 1;
+  }
+
+  /* Fatores qualitativos — bloco simétrico e neutro */
+  .factors { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px; margin-bottom: 20px; box-shadow: var(--shadow); }
+  .factors h3 { margin: 0 0 16px; font-size: 16px; font-weight: 600; letter-spacing: -0.01em; }
+  .factors-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media (max-width: 560px) { .factors-grid { grid-template-columns: 1fr; } }
+  .factor { padding: 14px 16px; background: var(--surface-2); border-radius: var(--radius-sm); border: 1px solid var(--line); }
+  .factor-label { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 10px; font-weight: 600; }
+  .factor ul { margin: 0; padding-left: 18px; font-size: 13px; color: var(--ink-2); line-height: 1.55; }
+  .factor li { margin-bottom: 6px; }
+  .factor li:last-child { margin-bottom: 0; }
+  .factors-note { font-size: 13px; color: var(--ink-3); margin: 16px 0 0; line-height: 1.55; font-style: italic; }
+  .col .title { font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.8; margin-bottom: 8px; font-weight: 500; }
+  .col .big { font-size: 30px; font-weight: 600; letter-spacing: -0.02em; line-height: 1.1; margin-bottom: 4px; }
+  .col .sub { font-size: 13px; opacity: 0.8; }
+  .col dl { display: grid; grid-template-columns: 1fr auto; gap: 6px 12px; margin: 16px 0 0; font-size: 13px; }
+  .col dt { opacity: 0.75; font-weight: 300; }
+  .col dd { margin: 0; font-weight: 500; text-align: right; }
+
+  .delta { background: rgba(105,228,112,.12); border: 1px dashed var(--accent); border-radius: var(--radius-sm); padding: 14px 18px; margin-top: 20px; font-size: 15px; color: #F9F9F9; }
+  :root[data-theme="dark"] .delta, :root:not([data-theme="light"]) .delta { color: var(--ink); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .delta { color: var(--ink); } }
+  .delta strong { color: var(--accent); font-weight: 600; }
+
+  .risk { background: var(--risk-bg); border-radius: var(--radius); padding: 24px 28px; margin-bottom: 20px; border-left: 4px solid var(--risk-line); color: var(--risk-ink); }
+  .risk h3 { margin: 0 0 6px; font-size: 17px; font-weight: 600; display: flex; align-items: center; gap: 8px; letter-spacing: -0.01em; }
+  .risk h3 .warn-icon { width: 22px; height: 22px; background: var(--risk-line); color: #fff; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 13px; font-weight: 700; }
+  .risk p { margin: 0 0 12px; font-size: 14px; line-height: 1.55; }
+  .risk p:last-child { margin-bottom: 0; }
+  .risk .lost { font-size: 22px; font-weight: 600; color: var(--risk-line); letter-spacing: -0.01em; }
+  .risk .quote { background: rgba(255,255,255,.5); border-radius: var(--radius-sm); padding: 12px 14px; font-size: 13px; font-style: italic; margin-top: 12px; border-left: 2px solid var(--risk-line); }
+  :root[data-theme="dark"] .risk .quote, :root:not([data-theme="light"]) .risk .quote { background: rgba(0,0,0,.25); }
+  @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .risk .quote { background: rgba(0,0,0,.25); } }
+
+  .timeline { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; margin-bottom: 20px; }
+  @media (max-width: 560px) { .timeline { grid-template-columns: 1fr; } }
+  .step { padding: 16px; border-left: 3px solid var(--accent); background: var(--surface); border-radius: 0 var(--radius-sm) var(--radius-sm) 0; }
+  .step .when { font-size: 12px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 4px; font-weight: 500; }
+  .step .what { font-size: 14px; color: var(--ink); font-weight: 500; }
+
+  details { border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 12px 16px; background: var(--surface); margin-bottom: 20px; }
+  details summary { cursor: pointer; font-size: 14px; color: var(--ink-2); font-weight: 500; list-style: none; display: flex; align-items: center; justify-content: space-between; }
+  details summary::after { content: '+'; font-size: 18px; color: var(--ink-3); }
+  details[open] summary::after { content: '−'; }
+  details summary::-webkit-details-marker { display: none; }
+  .assumptions { margin-top: 12px; font-size: 13px; color: var(--ink-2); }
+  .assumptions .row { display: grid; grid-template-columns: 1fr auto; gap: 12px; padding: 6px 0; border-bottom: 1px dashed var(--line); }
+  .assumptions .row:last-child { border-bottom: 0; }
+
+  footer { font-size: 12px; color: var(--ink-3); line-height: 1.55; margin-top: 32px; padding-top: 24px; border-top: 1px solid var(--line); }
+  footer p { margin: 0 0 8px; }
+  footer a { color: var(--ink-2); }
+
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 4px; }
+</style>
+
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+        <circle cx="12" cy="12" r="11" fill="currentColor"/>
+        <path d="M8 10c0-1.1.9-2 2-2h4c1.1 0 2 .9 2 2v.5c0 .8-.7 1.5-1.5 1.5h-3c-.8 0-1.5.7-1.5 1.5S10.7 15 11.5 15H16" stroke="var(--bg)" stroke-width="1.6" stroke-linecap="round"/>
+      </svg>
+      Selvia
+    </div>
+    <button class="theme-btn" id="themeBtn" aria-label="Alternar tema">Tema</button>
+  </header>
+
+  <section class="hero">
+    <span class="eyebrow">Reforma Tributária · 2027</span>
+    <h1>Simples ou Simples Híbrido? Descubra em 2 minutos.</h1>
+    <p class="lead">Em setembro/2026 abre a janela de adesão ao <strong>Simples Híbrido</strong>, um novo regime criado pela Reforma Tributária. Se você é PJ de serviço, essa é uma decisão que precisa tomar até o final de setembro — e essa calculadora ajuda a comparar os dois cenários com seus próprios números.</p>
+    <div class="estim-banner">
+      <strong>Simulação didática do ano 1 (2027).</strong> A transição da Reforma é gradual: em 2027 só a CBS entra cheia (8,8%) e o IBS fica em fase de teste (0,1%). O impacto do Híbrido tende a aumentar nos anos seguintes até 2033.
+    </div>
+  </section>
+
+  <!-- Bloco 0 - Profissão -->
+  <div class="card">
+    <h2>O que você faz?</h2>
+    <p class="hint">Isso ajuda a gente a sugerir os melhores parâmetros pro seu caso.</p>
+    <div class="field">
+      <div class="profession-grid" role="radiogroup" aria-label="Profissão">
+        <input type="radio" name="prof" id="prof-med" value="saude"><label for="prof-med"><span class="prof-icon">🩺</span>Médico</label>
+        <input type="radio" name="prof" id="prof-psi" value="saude"><label for="prof-psi"><span class="prof-icon">🧠</span>Psicólogo</label>
+        <input type="radio" name="prof" id="prof-odonto" value="saude"><label for="prof-odonto"><span class="prof-icon">🦷</span>Dentista</label>
+        <input type="radio" name="prof" id="prof-dev" value="tec" checked><label for="prof-dev"><span class="prof-icon">💻</span>Dev / Tech</label>
+        <input type="radio" name="prof" id="prof-cons" value="tec"><label for="prof-cons"><span class="prof-icon">📊</span>Consultor</label>
+        <input type="radio" name="prof" id="prof-eng" value="tec"><label for="prof-eng"><span class="prof-icon">⚙️</span>Engenheiro</label>
+        <input type="radio" name="prof" id="prof-des" value="tec"><label for="prof-des"><span class="prof-icon">🎨</span>Designer / Marketing</label>
+        <input type="radio" name="prof" id="prof-adv" value="tec"><label for="prof-adv"><span class="prof-icon">⚖️</span>Advogado / Contador</label>
+        <input type="radio" name="prof" id="prof-out" value="tec"><label for="prof-out"><span class="prof-icon">💼</span>Outro</label>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bloco 1 - Faturamento -->
+  <div class="card">
+    <h2>Seu faturamento</h2>
+    <p class="hint">Quanto sua PJ fatura em média por mês.</p>
+    <div class="field">
+      <label for="fatMensal">Faturamento mensal médio</label>
+      <div class="input-money">
+        <span class="prefix">R$</span>
+        <input type="text" id="fatMensal" inputmode="decimal" value="20.000,00">
+      </div>
+      <div class="auto-note">A gente calcula o anual pra você: <strong id="fatAnualDisplay">R$ 240.000</strong>/ano</div>
+    </div>
+    <div class="warn-box" id="warn-teto">Acima de R$ 4,8 milhões/ano você já está fora do Simples — essa calculadora não se aplica ao seu caso.</div>
+  </div>
+
+  <!-- Bloco 2 - Pró-labore / Fator R -->
+  <div class="card">
+    <h2>Quanto você paga de pró-labore?</h2>
+    <p class="hint">O pró-labore entra na conta porque impacta o valor total que sua PJ desembolsa por mês.</p>
+    <div class="field">
+      <label for="proLabore">Pró-labore mensal <span class="sub">(soma de todos os sócios)</span></label>
+      <div class="input-money">
+        <span class="prefix">R$</span>
+        <input type="text" id="proLabore" inputmode="decimal" value="6.000,00">
+      </div>
+      <div class="quick-actions">
+        <div class="quick-action">
+          <button type="button" class="quick-btn" id="btnMinimo">Usar salário mínimo (R$ 1.621)</button>
+          <span class="quick-hint">típico de dev, consultor, designer, engenheiro</span>
+        </div>
+        <div class="quick-action">
+          <button type="button" class="quick-btn" id="btnFatorR">Ajustar pro Fator R (28% do faturamento)</button>
+          <span class="quick-hint">típico de médico, psicólogo, dentista</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bloco 3 - Mix de receita -->
+  <div class="card">
+    <h2>De onde vem sua receita</h2>
+    <p class="hint">Essa é a pergunta que mais mexe no risco competitivo. Divida sua receita entre esses dois tipos de cliente:</p>
+
+    <div class="mix-cards">
+      <div class="mix-card">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--verde-escuro);">
+            <rect x="3" y="7" width="18" height="13" rx="1"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2M3 13h18"/>
+          </svg>
+        </div>
+        <div class="name">Empresa (B2B)</div>
+        <div class="desc">Você emite nota para <strong>outra empresa</strong> (CNPJ). Ela usa o crédito de imposto que sua nota gera.</div>
+        <div class="ex">Ex.: hospital, clínica, convênio, startup, agência, empresa de tecnologia, cliente corporativo, PJ do exterior.</div>
+      </div>
+      <div class="mix-card">
+        <div class="icon" aria-hidden="true">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" style="color:var(--verde-escuro);">
+            <circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/>
+          </svg>
+        </div>
+        <div class="name">Pessoa física (B2C)</div>
+        <div class="desc">Você atende <strong>direto o consumidor final</strong>. Não gera crédito pra ninguém.</div>
+        <div class="ex">Ex.: aulas particulares, freelas para pessoa física, projetos autorais, produtos digitais.</div>
+      </div>
+    </div>
+
+    <div class="slider-block">
+      <div class="slider-label">
+        <span>Quanto da sua receita vem de <strong>empresas (B2B)</strong>?</span>
+        <span class="val"><span id="pjVal">90</span>%</span>
+      </div>
+      <input type="range" id="pjSlider" min="0" max="100" value="90" aria-label="Percentual de receita B2B">
+      <div class="mix-preview" aria-hidden="true">
+        <div class="pj" id="mixPj" style="width:90%"></div>
+        <div class="pf" id="mixPf" style="width:10%"></div>
+      </div>
+      <div style="display:flex; justify-content:space-between; font-size:12px; color:var(--ink-3); margin-top:8px;">
+        <span>0% — só pessoa física</span>
+        <span>100% — só empresas</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bloco 4 - Despesas -->
+  <div class="card">
+    <h2>Despesas que geram crédito</h2>
+    <p class="hint">Só entram gastos com nota fiscal. Pró-labore, distribuição de lucros, folha CLT e aluguel residencial <strong>não</strong> creditam.</p>
+    <div class="grid-2">
+      <div class="field">
+        <label for="dSoftware">Softwares e SaaS <span class="sub">(GitHub, Figma, Notion, etc.)</span></label>
+        <div class="input-money"><span class="prefix">R$</span><input type="text" id="dSoftware" inputmode="decimal" value="800,00"></div>
+      </div>
+      <div class="field">
+        <label for="dEquip">Equipamentos e materiais <span class="sub">(hardware, licenças, materiais médicos, insumos, EPI)</span></label>
+        <div class="input-money"><span class="prefix">R$</span><input type="text" id="dEquip" inputmode="decimal" value="500,00"></div>
+      </div>
+      <div class="field">
+        <label for="dCoworking">Coworking / sala comercial / consultório <span class="sub">(R$/mês, aluguel de PJ)</span></label>
+        <div class="input-money"><span class="prefix">R$</span><input type="text" id="dCoworking" inputmode="decimal" value="600,00"></div>
+      </div>
+      <div class="field">
+        <label for="dServicos">Serviços contratados <span class="sub">(contabilidade, marketing, jurídico)</span></label>
+        <div class="input-money"><span class="prefix">R$</span><input type="text" id="dServicos" inputmode="decimal" value="500,00"></div>
+      </div>
+      <div class="field" style="grid-column: 1 / -1;">
+        <label for="dOutros">Outros custos com nota fiscal</label>
+        <div class="input-money"><span class="prefix">R$</span><input type="text" id="dOutros" inputmode="decimal" value="0,00"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Fatores qualitativos -->
+  <div class="factors" aria-live="polite">
+    <h3>Além da conta do imposto, considere:</h3>
+    <div class="factors-grid">
+      <div class="factor">
+        <div class="factor-label">A favor do tradicional</div>
+        <ul>
+          <li>Se não fizer nada, você continua no Simples tradicional</li>
+          <li>Apuração simples: uma guia por mês (DAS)</li>
+          <li>Sem risco de erro de cálculo de IBS/CBS por fora</li>
+          <li>Sem reajuste na mensalidade contábil</li>
+        </ul>
+      </div>
+      <div class="factor">
+        <div class="factor-label">A favor do Híbrido</div>
+        <ul>
+          <li>Sua nota gera mais crédito de IBS/CBS pra empresa que te contrata (potencial diferencial em contratos B2B)</li>
+          <li>Você pode aproveitar crédito das despesas com nota fiscal</li>
+          <li>Se seus clientes forem empresas grandes atentas a crédito tributário, pode virar exigência do contrato</li>
+        </ul>
+      </div>
+    </div>
+    <p class="factors-note">Se sua receita é majoritariamente de pessoa física, esses fatores são menos relevantes. Se é majoritariamente de empresas, valem uma conversa direta com seus clientes pra entender a postura deles antes de decidir.</p>
+  </div>
+
+  <!-- Resultado -->
+  <div class="result" aria-live="polite">
+    <span class="badge" id="badge">Comparativo tributário</span>
+    <h2 class="verdict" id="verdict">—</h2>
+    <p class="confidence" id="confidence">—</p>
+
+    <div class="compare">
+      <div class="col" id="colA">
+        <div class="title">Simples tradicional</div>
+        <div class="big" id="liqA">R$ —</div>
+        <div class="sub">líquido / mês</div>
+        <dl>
+          <dt>Imposto mensal</dt><dd id="impA">R$ —</dd>
+          <dt>Líquido anual</dt><dd id="anoA">R$ —</dd>
+          <dt>Carga efetiva</dt><dd id="cargaA">—</dd>
+          <dt>Apuração</dt><dd>Guia única (DAS)</dd>
+        </dl>
+      </div>
+      <div class="col" id="colB">
+        <div class="title">Simples Híbrido (2027)</div>
+        <div class="big" id="liqB">R$ —</div>
+        <div class="sub">líquido / mês</div>
+        <dl>
+          <dt>Imposto mensal</dt><dd id="impB">R$ —</dd>
+          <dt>Líquido anual</dt><dd id="anoB">R$ —</dd>
+          <dt>Carga efetiva</dt><dd id="cargaB">—</dd>
+          <dt>Apuração</dt><dd>DAS + IBS/CBS por fora</dd>
+        </dl>
+      </div>
+    </div>
+    <div class="delta" id="delta">—</div>
+  </div>
+
+  <div class="timeline">
+    <div class="step"><div class="when">Setembro / 2026</div><div class="what">Janela de adesão ao Simples Híbrido abre</div></div>
+    <div class="step"><div class="when">30 / nov / 2026</div><div class="what">Prazo para cancelar sem penalidade</div></div>
+    <div class="step"><div class="when">1º / jan / 2027</div><div class="what">Novo regime começa a valer</div></div>
+  </div>
+
+  <details>
+    <summary>Premissas usadas neste cálculo</summary>
+    <div class="assumptions">
+      <div class="row"><span>Cenário simulado</span><span>Ano 1 — 2027</span></div>
+      <div class="row"><span>CBS em 2027</span><span>8,8% (alíquota cheia)</span></div>
+      <div class="row"><span>IBS em 2027</span><span>0,1% (fase teste)</span></div>
+      <div class="row"><span>IBS+CBS total (serviços gerais)</span><span>8,9%</span></div>
+      <div class="row"><span>Desconto no DAS do Híbrido</span><span>~3,65% (só sai PIS/Cofins; ISS ainda no DAS)</span></div>
+      <div class="row"><span>Aproveitamento do crédito de despesas</span><span>70%</span></div>
+      <div class="row"><span>Anexo do Simples</span><span>III (clientes Selvia têm CNAE adequado)</span></div>
+      <div class="row"><span>Faturamento anual</span><span>12 × mensal</span></div>
+    </div>
+    <p style="font-size:12px; color:var(--ink-3); margin:14px 0 0; line-height:1.5;">
+      A transição da reforma é gradual: em 2027 só a CBS entra cheia; o IBS cresce ano a ano e o regime cheio (IBS+CBS a 26,5%) só chega em 2033. Esta calculadora projeta especificamente o cenário do primeiro ano — o impacto tende a aumentar nos anos seguintes.
+    </p>
+  </details>
+
+  <footer>
+    <p>Simulação didática com base na <strong>LC 214/2025</strong> e nas alíquotas de referência estimadas. O resultado final depende da regulamentação do Comitê Gestor e da sua realidade contratual — use como ordem de grandeza, não valor exato.</p>
+    <p>O Simples Híbrido implica reajuste na mensalidade contábil, pela complexidade tributária adicional (dupla apuração, controle mês a mês, conciliação de créditos). Considere esse custo na sua decisão.</p>
+  </footer>
+</div>
+
+<script>
+  const CFG = {
+    // Cenário 2027: CBS entra cheia (8,8%) + IBS em teste (0,1%). PIS/Cofins saem do DAS; ISS ainda no DAS.
+    aliquota_iva_padrao: 0.089, // 8,8% CBS + 0,1% IBS
+    fator_aproveitamento_credito: 0.70,
+    fator_r_min: 0.28,
+    salario_minimo: 1621.00,
+    // Anexo III — desc_hib_2027 reflete só a saída de PIS/Cofins (ISS continua no DAS até 2029)
+    anexo_iii: [
+      { ate: 180000,   nom: 0.0600, ded: 0,      desc_hib: 0.0413 },
+      { ate: 360000,   nom: 0.1120, ded: 9360,   desc_hib: 0.0350 },
+      { ate: 720000,   nom: 0.1350, ded: 17640,  desc_hib: 0.0332 },
+      { ate: 1800000,  nom: 0.1600, ded: 35640,  desc_hib: 0.0300 },
+      { ate: 3600000,  nom: 0.2100, ded: 125640, desc_hib: 0.0303 },
+      { ate: 4800000,  nom: 0.3300, ded: 648000, desc_hib: 0.0303 },
+    ],
+  };
+
+  const fmtBRL = n => 'R$ ' + (isFinite(n) ? n : 0).toLocaleString('pt-BR', { minimumFractionDigits: 0, maximumFractionDigits: 0 });
+  const fmtPct = n => (isFinite(n) ? n * 100 : 0).toLocaleString('pt-BR', { minimumFractionDigits: 1, maximumFractionDigits: 1 }) + '%';
+
+  function parseBR(v) {
+    if (typeof v !== 'string') return Number(v) || 0;
+    let s = v.replace(/[^\d,.-]/g, '').replace(/\./g, '').replace(',', '.');
+    const n = parseFloat(s);
+    return isFinite(n) ? n : 0;
+  }
+  function formatBRInput(v) {
+    return parseBR(v).toLocaleString('pt-BR', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  }
+
+  document.querySelectorAll('input[inputmode="decimal"]').forEach(inp => {
+    inp.addEventListener('blur', () => { inp.value = formatBRInput(inp.value); calc(); });
+    inp.addEventListener('input', () => calc());
+  });
+
+  function faixaAtual(tabela, rbt12) {
+    return tabela.find(f => rbt12 <= f.ate) || tabela[tabela.length - 1];
+  }
+  function aliquotaSimples(tabela, rbt12) {
+    if (rbt12 <= 0) return 0;
+    const f = faixaAtual(tabela, rbt12);
+    return Math.max(0, (rbt12 * f.nom - f.ded) / rbt12);
+  }
+  function descontoDasHibrido(tabela, rbt12) {
+    if (rbt12 <= 0) return 0;
+    return faixaAtual(tabela, rbt12).desc_hib;
+  }
+
+  function calc() {
+    const R = parseBR(document.getElementById('fatMensal').value);
+    const proLabore = parseBR(document.getElementById('proLabore').value);
+    const RBT12 = R * 12;
+    const pPj = parseInt(document.getElementById('pjSlider').value, 10) / 100;
+
+    document.getElementById('fatAnualDisplay').textContent = fmtBRL(RBT12);
+
+    // Todos os clientes Selvia caem no Anexo III (CNAEs adequados)
+    const tabela = CFG.anexo_iii;
+
+    const D = ['dSoftware','dEquip','dCoworking','dServicos','dOutros']
+      .reduce((sum, id) => sum + parseBR(document.getElementById(id).value), 0);
+
+    document.getElementById('warn-teto').classList.toggle('show', RBT12 > 4800000);
+
+    const aDas = aliquotaSimples(tabela, RBT12);
+    const aDasHib = Math.max(0, aDas - descontoDasHibrido(tabela, RBT12));
+    const aIva = CFG.aliquota_iva_padrao; // 8,9% em 2027 (CBS cheia + IBS teste)
+
+    const impA = R * aDas;
+    const liqA = R - impA;
+
+    const dasB = R * aDasHib;
+    const ivaB = R * aIva;
+    const cIva = D * aIva * CFG.fator_aproveitamento_credito;
+    const credAprov = Math.min(cIva, ivaB);
+    const impB = dasB + ivaB - credAprov;
+    const liqB = R - impB;
+    document.getElementById('pjVal').textContent = Math.round(pPj * 100);
+
+    document.getElementById('liqA').textContent = fmtBRL(liqA);
+    document.getElementById('impA').textContent = fmtBRL(impA);
+    document.getElementById('anoA').textContent = fmtBRL(liqA * 12);
+    document.getElementById('cargaA').textContent = R > 0 ? fmtPct(impA / R) : '—';
+
+    document.getElementById('liqB').textContent = fmtBRL(liqB);
+    document.getElementById('impB').textContent = fmtBRL(impB);
+    document.getElementById('anoB').textContent = fmtBRL(liqB * 12);
+    document.getElementById('cargaB').textContent = R > 0 ? fmtPct(impB / R) : '—';
+
+    const colA = document.getElementById('colA');
+    const colB = document.getElementById('colB');
+    colA.classList.remove('winner');
+    colB.classList.remove('winner');
+
+    const diffAno = (liqB - liqA) * 12;
+    const diffAbs = Math.abs(diffAno);
+
+    const verdict = document.getElementById('verdict');
+    const confidence = document.getElementById('confidence');
+    const delta = document.getElementById('delta');
+
+    if (R <= 0) {
+      verdict.innerHTML = 'Preencha seu faturamento acima';
+      confidence.textContent = 'A calculadora atualiza sozinha conforme você digita.';
+      delta.textContent = '—';
+      return;
+    }
+
+    const relDiff = R > 0 ? Math.abs(liqB - liqA) / R : 0;
+
+    if (relDiff < 0.005) {
+      verdict.innerHTML = 'Está praticamente <span class="hl">empatado</span> no imposto.';
+      confidence.textContent = 'A diferença entre os dois regimes é pequena. Se não fizer nada, você continua no tradicional — que é mais simples de operar. O Híbrido só faz sentido se seus clientes exigirem crédito.';
+      colA.classList.add('winner');
+    } else if (liqB > liqA) {
+      verdict.innerHTML = 'Com o <span class="hl">Simples Híbrido</span> você paga menos imposto.';
+      confidence.textContent = 'A diferença aparece porque você tem despesas creditáveis relevantes. Considere que o Híbrido exige apuração mensal separada, mais complexidade contábil e reajuste da mensalidade contábil.';
+      colB.classList.add('winner');
+    } else {
+      verdict.innerHTML = 'Com o <span class="hl">Simples tradicional</span> você paga menos imposto.';
+      confidence.textContent = 'E se não fizer nada, você continua nele: guia única (DAS), sem apuração de IVA por fora, sem risco de erro.';
+      colA.classList.add('winner');
+    }
+
+    const impDiffMensal = impB - impA;
+    const impDiffAnual = impDiffMensal * 12;
+    const impDiffAbs = Math.abs(impDiffAnual);
+    if (impDiffAnual > 0) {
+      delta.innerHTML = `No Híbrido você pagaria <strong>${fmtBRL(impDiffAbs)}</strong> a mais de imposto por ano.`;
+    } else if (impDiffAnual < 0) {
+      delta.innerHTML = `No tradicional você pagaria <strong>${fmtBRL(impDiffAbs)}</strong> a mais de imposto por ano.`;
+    } else {
+      delta.innerHTML = `Os dois regimes te fazem pagar <strong>o mesmo imposto</strong>.`;
+    }
+  }
+
+  // Botões rápidos de pró-labore
+  document.getElementById('btnMinimo').addEventListener('click', () => {
+    const inp = document.getElementById('proLabore');
+    inp.value = formatBRInput(CFG.salario_minimo);
+    calc();
+  });
+  document.getElementById('btnFatorR').addEventListener('click', () => {
+    const R = parseBR(document.getElementById('fatMensal').value);
+    const inp = document.getElementById('proLabore');
+    // Um pouco acima do limite pra segurança
+    inp.value = formatBRInput(R * CFG.fator_r_min * 1.02);
+    calc();
+  });
+
+  // Sugestão automática de pró-labore baseada na profissão selecionada
+  document.querySelectorAll('input[name="prof"]').forEach(r => {
+    r.addEventListener('change', () => {
+      const R = parseBR(document.getElementById('fatMensal').value);
+      const inp = document.getElementById('proLabore');
+      if (r.value === 'saude') {
+        // Saúde tende a Anexo III → pró-labore alto (~28% do faturamento)
+        inp.value = formatBRInput(R * CFG.fator_r_min * 1.02);
+      } else {
+        // Tec/geral: pró-labore mínimo, sem necessidade de Fator R
+        inp.value = formatBRInput(CFG.salario_minimo);
+      }
+      calc();
+    });
+  });
+
+  const pjSlider = document.getElementById('pjSlider');
+  pjSlider.addEventListener('input', () => {
+    const v = parseInt(pjSlider.value, 10);
+    document.getElementById('mixPj').style.width = v + '%';
+    document.getElementById('mixPf').style.width = (100 - v) + '%';
+    calc();
+  });
+
+  const themeBtn = document.getElementById('themeBtn');
+  try {
+    const saved = localStorage.getItem('selvia-theme');
+    if (saved === 'dark' || saved === 'light') document.documentElement.setAttribute('data-theme', saved);
+  } catch(e) {}
+  themeBtn.addEventListener('click', () => {
+    const cur = document.documentElement.getAttribute('data-theme');
+    const dark = cur === 'dark' || (!cur && matchMedia('(prefers-color-scheme: dark)').matches);
+    const next = dark ? 'light' : 'dark';
+    document.documentElement.setAttribute('data-theme', next);
+    try { localStorage.setItem('selvia-theme', next); } catch(e) {}
+  });
+
+  document.querySelectorAll('input[inputmode="decimal"]').forEach(inp => { inp.value = formatBRInput(inp.value); });
+  calc();
+</script>
